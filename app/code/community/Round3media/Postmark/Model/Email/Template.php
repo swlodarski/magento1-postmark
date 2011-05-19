@@ -27,12 +27,19 @@ class Round3media_Postmark_Model_Email_Template extends Mage_Core_Model_Email_Te
 			return parent::send($email, $name, $variables);
 		}
 
-		if (is_null($name)) {
-			$name = substr($email, 0, strpos($email, '@'));
+		$emails = array_values((array)$email);
+		$names = is_array($name) ? $name : (array)$name;
+		$names = array_values($names);
+		foreach ($emails as $key => $email) 
+		{
+			if (!isset($names[$key])) 
+			{
+				$names[$key] = substr($email, 0, strpos($email, '@'));
+			}
 		}
 
-		$variables['email'] = $email;
-		$variables['name'] = $name;
+		$variables['email'] = $emails[0];
+		$variables['name'] = $names[0];
 
 		$this->setUseAbsoluteLinks(true);
 		$text = $this->getProcessedTemplate($variables, true);
@@ -48,16 +55,13 @@ class Round3media_Postmark_Model_Email_Template extends Mage_Core_Model_Email_Te
 		$to = $email;
 		$subject = $this->getProcessedTemplateSubject($variables);
 
-		$url = 'http://api.postmarkapp.com/email';
+		$url = 'https://api.postmarkapp.com/email';
 
 		$apikey = Mage::getStoreConfig('postmark/settings/apikey');
 
 		$data = array (
 			'Subject' => $subject
 		);
-
-		$data['From'] = "$fromName <{$from}>";
-		$data['To'] = "$name <{$to}>";
 
 		$data['HtmlBody'] = $text;
 		$data['TextBody'] = $text;
@@ -69,6 +73,16 @@ class Round3media_Postmark_Model_Email_Template extends Mage_Core_Model_Email_Te
 						"X-Postmark-Server-Token: " . $apikey
 		);
 
+		$data['From'] = "$fromName <{$from}>";
+		$to = array();
+
+		foreach($emails as $key => $currentEmail)
+		{
+			$to[] = "$names[$key] <{$currentEmail}>";
+		}
+
+		$data['To'] = implode($to, ",");
+
 		$handle_id = @curl_init();
 		@curl_setopt($handle_id, CURLOPT_URL, $url);
 		@curl_setopt($handle_id, CURLOPT_RETURNTRANSFER, true);
@@ -77,5 +91,6 @@ class Round3media_Postmark_Model_Email_Template extends Mage_Core_Model_Email_Te
 		@curl_setopt($handle_id, CURLOPT_HTTPHEADER, $headers);
 		@curl_exec($handle_id);
 		@curl_close($handle_id);
+		
 	}
 }
