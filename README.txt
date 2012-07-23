@@ -1,2 +1,0 @@
-You can now send emails from Magento through Postmark, which "helps deliver and track transactional emails for web applications". For more info on Postmark, visit postmarkapp.com Postmark is currently in beta. The Postmark logo and name are trademarks of Wildbit, LLC. You can now send emails from Magento through Postmark, which "helps deliver and track transactional emails for web applications". For more info on Postmark, visit postmarkapp.com Postmark is currently in beta. The Postmark logo and name are trademarks of Wildbit, LLC.
-
