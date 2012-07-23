@@ -1,7 +1,6 @@
-<?xml version="1.0"?>
-<!-- 
+<?php
 /**
- * round3media
+ * Postmark integration
  * 
  * NOTICE OF LICENSE
  * 
@@ -13,17 +12,13 @@
  * obtain it through the world-wide-web, please send an email
  * to info@round3media.com so we can send you a copy immediately.
  * 
- * @category	Round3media
- * @package		Round3media_Postmark
- * @copyright	Copyright (c) 2009 round3media, LLC
- * @license		http://www.opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @category    SUMOHeavy
+ * @package     SUMOHeavy_Postmark
+ * @copyright   Copyright (c) 2009 round3media, LLC
+ * @notice      The Postmark logo and name are trademarks of Wildbit, LLC
+ * @license     http://www.opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  */
- -->
-<config>
-    <modules>
-        <Round3media_Postmark>
-            <active>true</active>
-            <codePool>community</codePool>
-        </Round3media_Postmark>
-    </modules>
-</config>
+class SUMOHeavy_Postmark_Helper_Data extends Mage_Core_Helper_Abstract
+{
+
+}
