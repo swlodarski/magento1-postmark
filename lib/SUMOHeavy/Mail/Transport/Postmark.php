@@ -129,7 +129,11 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
                     break;
                 case 422:
                     $error = Zend_Json::decode($response->getBody());
-                    throw new RuntimeException(sprintf('Postmark request error: Unprocessable Entity - API error code %s, message: %s', $error->ErrorCode, $error->Message));
+                    if(is_object($error)) {
+                        throw new RuntimeException(sprintf('Postmark request error: Unprocessable Entity - API error code %s, message: %s', $error->ErrorCode, $error->Message));
+                    } else {
+                        throw new RuntimeException(sprintf('Postmark request error: Unprocessable Entity - API error code %s, message: %s', $error['ErrorCode'], $error['Message']));
+                    }
                     break;
                 case 500:
                     throw new RuntimeException('Postmark request error: Postmark Internal Server Error');
