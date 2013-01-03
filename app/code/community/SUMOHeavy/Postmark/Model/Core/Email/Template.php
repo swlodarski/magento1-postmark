@@ -74,7 +74,22 @@ class SUMOHeavy_Postmark_Model_Core_Email_Template extends Mage_Core_Model_Email
         }
 
         $mail->setSubject($this->getProcessedTemplateSubject($variables));
-        $mail->setFrom($this->getSenderEmail(), $this->getSenderName());
+
+        $isStoreEmail = false;
+        $storeEmails = Mage::getStoreConfig('trans_email');
+        foreach($storeEmails as $email) {
+            if($email['email'] == $this->getSenderEmail()) {
+                $isStoreEmail = true;
+                break;
+            }
+        }
+        
+        if($isStoreEmail) {
+            $mail->setFrom($this->getSenderEmail(), $this->getSenderName());
+        } else {
+            $mail->setFrom(Mage::getStoreConfig('trans_email/ident_support/email'), $this->getSenderName());
+            $mail->setReplyTo($this->getSenderEmail());
+        }
 
         try {
             $mail->send();
