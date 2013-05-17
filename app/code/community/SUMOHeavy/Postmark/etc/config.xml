@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
 /**
  * Postmark integration
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -12,7 +12,7 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to info@sumoheavy.com so we can send you a copy immediately.
- * 
+ *
  * @category    SUMOHeavy
  * @package     SUMOHeavy_Postmark
  * @copyright   Copyright (c) 2012 SUMO Heavy Industries, LLC
@@ -29,11 +29,28 @@
 
     <global>
         <models>
+            <postmark>
+                <class>SUMOHeavy_Postmark_Model</class>
+            </postmark>
+
             <core>
                 <rewrite>
                     <email_template>SUMOHeavy_Postmark_Model_Core_Email_Template</email_template>
                 </rewrite>
             </core>
+
+            <!--
+            /**
+             * aheadworksRMA rewrites Mage_Core_Model_Email_Template,
+             * what is causing not using Postmark integration.
+             * This rewrite resolves problem.
+             */
+            -->
+            <awrma>
+                <rewrite>
+                    <email_template>SUMOHeavy_Postmark_Model_Awrma_Email_Template</email_template>
+                </rewrite>
+            </awrma>
         </models>
 
         <helpers>
