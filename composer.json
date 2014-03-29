@@ -1,0 +1,26 @@
+{
+    "name": "sumoheavy/magento-postmark",
+    "type": "magento-module",
+    "description": "Postmark for Magento",
+    "keywords": ["magento"],
+    "homepage": "https://github.com/sumoheavy/SUMOHeavy_Postmark",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "Szymon Wlodarski",
+            "email": "szymon.wlodarski@polcode.com",
+            "homepage": "http://www.sumoheavy.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.13",
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "extra": {
+        "map": [
+            ["app", "app"],
+            ["lib", "lib"]
+        ]
+    }
+}
