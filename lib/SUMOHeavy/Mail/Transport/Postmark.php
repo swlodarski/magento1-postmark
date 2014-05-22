@@ -1,9 +1,9 @@
 <?php
 /**
  * Postmark integration
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -11,7 +11,7 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to info@sumoheavy.com so we can send you a copy immediately.
- * 
+ *
  * @category    SUMOHeavy
  * @package     SUMOHeavy_Postmark
  * @copyright   Copyright (c) 2012 SUMO Heavy Industries, LLC
@@ -49,7 +49,7 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
         if (empty($apiKey)) {
             throw new Exception( __CLASS__ . ' requires API key' );
         }
-        
+
         $this->_apiKey = $apiKey;
     }
 
@@ -148,7 +148,7 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
 
     /**
      * Get mail From
-     * 
+     *
      * @return string
      */
     public function getFrom()
@@ -168,7 +168,7 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
 
     /**
      * Get mail To
-     * 
+     *
      * @return string
      */
     public function getTo()
@@ -188,7 +188,7 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
 
     /**
      * Get mail Cc
-     * 
+     *
      * @return string
      */
     public function getCc()
@@ -212,7 +212,7 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
 
     /**
      * Get mail Bcc
-     * 
+     *
      * @return string
      */
     public function getBcc()
@@ -235,7 +235,7 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
 
     /**
      * Get mail Reply To
-     * 
+     *
      * @return string
      */
     public function getReplyTo()
@@ -255,7 +255,7 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
 
     /**
      * Get mail subject
-     * 
+     *
      * @return string
      */
     public function getSubject()
@@ -268,7 +268,7 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
 
     /**
      * Get mail body - html
-     * 
+     *
      * @return string
      */
     public function getBodyHtml()
@@ -283,7 +283,7 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
 
     /**
      * Get mail body - plain
-     * 
+     *
      * @return string
      */
     public function getBodyText()
@@ -298,7 +298,7 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
 
     /**
      * Get mail Tag
-     * 
+     *
      * @return string
      */
     public function getTags()
@@ -318,7 +318,7 @@ class SUMOHeavy_Mail_Transport_Postmark extends Zend_Mail_Transport_Abstract
 
     /**
      * Get mail Attachments
-     * 
+     *
      * @return array
      */
     public function getAttachments()
