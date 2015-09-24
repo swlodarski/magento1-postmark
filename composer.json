@@ -19,8 +19,9 @@
     },
     "extra": {
         "map": [
-            ["app", "app"],
-            ["lib", "lib"]
+            ["app/code/community/SUMOHeavy/Postmark", "app/code/community/SUMOHeavy/Postmark"],
+            ["app/etc/modules/SUMOHeavy_Postmark.xml", "app/etc/modules/SUMOHeavy_Postmark.xml"],
+            ["lib/SUMOHeavy", "lib/SUMOHeavy"]
         ]
     }
 }
