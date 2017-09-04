@@ -20,6 +20,8 @@
  */
 class SUMOHeavy_Postmark_Model_Core_Email_Template extends Mage_Core_Model_Email_Template
 {
+    protected $mailTransport = null;
+
     /**
      * Send mail to recipient
      *
@@ -30,8 +32,9 @@ class SUMOHeavy_Postmark_Model_Core_Email_Template extends Mage_Core_Model_Email
      **/
     public function send($email, $name = null, array $variables = array())
     {
-        if(!Mage::getStoreConfig('postmark/settings/enabled') || !Mage::getStoreConfig('postmark/settings/apikey')) {
-            return parent::send($email, $name, $variables);
+        $hlp = Mage::helper('postmark');
+        if (!$hlp->isEnabled() || !$hlp->getApiKey()) {
+            return $this->callParentSend($email, $name, $variables);
         }
 
         if (!$this->isValidForSend()) {
@@ -57,7 +60,7 @@ class SUMOHeavy_Postmark_Model_Core_Email_Template extends Mage_Core_Model_Email
 
         $mail = $this->getMail();
 
-        $mailTransport = new SUMOHeavy_Mail_Transport_Postmark(Mage::getStoreConfig('postmark/settings/apikey'));
+        $mailTransport = $this->getMailTransport($hlp->getApiKey());
         Zend_Mail::setDefaultTransport($mailTransport);
 
         foreach ($emails as $key => $email) {
@@ -67,7 +70,7 @@ class SUMOHeavy_Postmark_Model_Core_Email_Template extends Mage_Core_Model_Email
         $this->setUseAbsoluteLinks(true);
         $text = $this->getProcessedTemplate($variables, true);
 
-        if($this->isPlain()) {
+        if ($this->isPlain()) {
             $mail->setBodyText($text);
         } else {
             $mail->setBodyHTML($text);
@@ -77,14 +80,14 @@ class SUMOHeavy_Postmark_Model_Core_Email_Template extends Mage_Core_Model_Email
 
         $isStoreEmail = false;
         $storeEmails = Mage::getStoreConfig('trans_email');
-        foreach($storeEmails as $email) {
-            if($email['email'] == $this->getSenderEmail()) {
+        foreach ($storeEmails as $email) {
+            if ($email['email'] == $this->getSenderEmail()) {
                 $isStoreEmail = true;
                 break;
             }
         }
 
-        if($isStoreEmail) {
+        if ($isStoreEmail) {
             $mail->setFrom($this->getSenderEmail(), $this->getSenderName());
         } else {
             $mail->clearReplyTo();
@@ -103,5 +106,32 @@ class SUMOHeavy_Postmark_Model_Core_Email_Template extends Mage_Core_Model_Email
         }
 
         return true;
+    }
+
+    public function getMailTransport($apiKey)
+    {
+        if($this->mailTransport === null) {
+            $this->mailTransport = new SUMOHeavy_Mail_Transport_Postmark($apiKey);
+        }
+        return $this->mailTransport;
+    }
+
+    public function setMailTransport($mailTransport)
+    {
+        $this->mailTransport = $mailTransport;
+        return $this;
+    }
+
+    /**
+     * Call parent send methid
+     *
+     * @param   array|string       $email        E-mail(s)
+     * @param   array|string|null  $name         receiver name(s)
+     * @param   array              $variables    template variables
+     * @return  boolean
+     **/
+    protected function callParentSend($email, $name = null, array $variables = array())
+    {
+        return parent::send($email, $name, $variables);
     }
 }

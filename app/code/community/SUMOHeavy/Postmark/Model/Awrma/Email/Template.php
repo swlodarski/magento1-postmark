@@ -27,7 +27,8 @@ class SUMOHeavy_Postmark_Model_Awrma_Email_Template extends AW_Rma_Model_Email_T
      */
     public function send($email, $name = null, array $variables = array())
     {
-        if(Mage::getStoreConfig('postmark/settings/enabled') && Mage::getStoreConfig('postmark/settings/apikey')) {
+        $hlp = Mage::helper('postmark');
+        if($hlp->isEnabled() && $hlp->getApiKey()) {
             $postmarkEmailTemplate = Mage::getModel('postmark/core_email_template');
 
             foreach($this->getData() as $key => $value) {
@@ -40,6 +41,19 @@ class SUMOHeavy_Postmark_Model_Awrma_Email_Template extends AW_Rma_Model_Email_T
             return $postmarkEmailTemplate->send($email, $name, $variables);
         }
 
+        return $this->callParentSend($email, $name, $variables);
+    }
+
+    /**
+     * Call parent send methid
+     *
+     * @param   array|string       $email        E-mail(s)
+     * @param   array|string|null  $name         receiver name(s)
+     * @param   array              $variables    template variables
+     * @return  boolean
+     **/
+    protected function callParentSend($email, $name = null, array $variables = array())
+    {
         return parent::send($email, $name, $variables);
     }
 }

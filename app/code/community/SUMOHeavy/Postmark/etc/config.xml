@@ -89,4 +89,12 @@
             </settings>
         </postmark>
     </default>
+
+    <phpunit>
+        <suite>
+            <modules>
+                <SUMOHeavy_Postmark />
+            </modules>
+        </suite>
+    </phpunit>
 </config>
